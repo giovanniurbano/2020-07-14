@@ -92,7 +92,7 @@ public class Simulator {
 					int nuovaSquadra = (int)(Math.random()*best.size());
 					Team newTeam = best.get(nuovaSquadra);
 					
-					int nuovoN = (this.reporterPerTeam.get(newTeam)+1) + ;
+					int nuovoN = (this.reporterPerTeam.get(newTeam)+1) ; //aggiustare n reporter per partita
 					
 					Event nuovoEvento = new Event(this.teamMatches.get(newTeam).get(T+1).getDate(), this.teamMatches.get(newTeam).get(T+1), EventType.PROMOZIONE, newTeam, nuovoN);
 					this.reporterPerTeam.replace(e.getTeam(), (this.reporterPerTeam.get(e.getTeam())-1));
@@ -144,7 +144,6 @@ public class Simulator {
 				}
 				
 				//promozione per l'altra squadra
-				Team home = this.model.idMap.get(match.getTeamHomeID());
 				int p = (int)(Math.random()*100);
 				if(p < 50) {
 					Set<Team> migliori = this.model.getMigliori(home).keySet();

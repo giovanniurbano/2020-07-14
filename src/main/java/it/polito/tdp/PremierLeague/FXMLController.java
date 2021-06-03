@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.PremierLeague.model.Model;
+import it.polito.tdp.PremierLeague.model.Simulator;
 import it.polito.tdp.PremierLeague.model.Team;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import javafx.scene.control.TextField;
 public class FXMLController {
 	
 	private Model model;
+	private Simulator sim;
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -83,7 +85,14 @@ public class FXMLController {
 
     @FXML
     void doSimula(ActionEvent event) {
-
+    	int n = Integer.parseInt(this.txtN.getText());
+    	int x = Integer.parseInt(this.txtX.getText());
+    	
+    	this.sim.init(n, x, this.model.getGrafo());
+    	this.sim.run();
+    	
+    	this.txtResult.setText("#ReporterMedioPerPartita: " + this.sim.getReporterMediPerPartita());
+    	this.txtResult.appendText("\n#PartiteSottoSoglia: " + this.sim.getnPartiteSottoSoglia());
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -99,5 +108,6 @@ public class FXMLController {
     
     public void setModel(Model model) {
     	this.model = model;
+    	this.sim = new Simulator(this.model);
     }
 }

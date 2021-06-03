@@ -19,7 +19,7 @@ import it.polito.tdp.PremierLeague.db.PremierLeagueDAO;
 public class Model {
 	private PremierLeagueDAO dao;
 	private Graph<Team, DefaultWeightedEdge> grafo;
-	private Map<Integer, Team> idMap;
+	Map<Integer, Team> idMap;
 	private Map<Integer, Integer> classifica;
 	
 	public Model() {
@@ -126,5 +126,11 @@ public class Model {
 	        }
 	    }
 	    return sortedMap;
+	}
+	
+	public void setTeamMatches(Map<Team, List<Match>> map) {
+		for(Integer teamID : this.idMap.keySet()) {
+			map.put(this.idMap.get(teamID), this.dao.getMatchesByTeam(teamID));
+		}
 	}
 }

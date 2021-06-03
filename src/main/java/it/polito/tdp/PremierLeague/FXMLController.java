@@ -53,7 +53,8 @@ public class FXMLController {
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
-
+    	String msg = this.model.creaGrafo();
+    	this.txtResult.setText(msg);
     }
 
     @FXML

@@ -51,48 +51,17 @@ public class FXMLController {
 
     @FXML
     void doClassifica(ActionEvent event) {
-    	this.txtResult.clear();
-    	Team s = this.cmbSquadra.getValue();
     	
-    	if(this.model.getGrafo() == null){
-    		this.txtResult.setText("Creare prima il grafo!");
-    		return;
-    	}
-    	
-    	if(s == null) {
-    		this.txtResult.setText("Scegliere una squadra!");
-    		return;
-    	}
-    	
-    	this.txtResult.appendText("\nSquadre migliori: ");
-    	for(Team t : this.model.getMigliori(s).keySet()) {
-    		this.txtResult.appendText(t.getName() + "(" + this.model.getMigliori(s).get(t) + ")\n");
-    	}
-    	
-    	this.txtResult.appendText("\nSquadre peggiori: ");
-    	for(Team t : this.model.getPeggiori(s).keySet()) {
-    		this.txtResult.appendText(t.getName() + " (" + this.model.getPeggiori(s).get(t) + ")\n");
-    	}
     }
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
-    	String msg = this.model.creaGrafo();
-    	this.txtResult.setText(msg);
     	
-    	this.cmbSquadra.getItems().addAll(this.model.getVertici());
     }
 
     @FXML
     void doSimula(ActionEvent event) {
-    	int n = Integer.parseInt(this.txtN.getText());
-    	int x = Integer.parseInt(this.txtX.getText());
     	
-    	this.sim.init(n, x, this.model.getGrafo());
-    	this.sim.run();
-    	
-    	this.txtResult.setText("#ReporterMedioPerPartita: " + this.sim.getReporterMediPerPartita());
-    	this.txtResult.appendText("\n#PartiteSottoSoglia: " + this.sim.getnPartiteSottoSoglia());
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -108,6 +77,6 @@ public class FXMLController {
     
     public void setModel(Model model) {
     	this.model = model;
-    	this.sim = new Simulator(this.model);
+    	
     }
 }

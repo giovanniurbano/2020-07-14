@@ -5,12 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import it.polito.tdp.PremierLeague.model.Action;
 import it.polito.tdp.PremierLeague.model.Match;
 import it.polito.tdp.PremierLeague.model.Player;
+import it.polito.tdp.PremierLeague.model.SquadraPunti;
 import it.polito.tdp.PremierLeague.model.Team;
 
 public class PremierLeagueDAO {
@@ -100,6 +102,65 @@ public class PremierLeagueDAO {
 
 			}
 			conn.close();
+			return result;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public List<SquadraPunti> getSquadrePunti(Map<Integer, Team> map) {
+		String sql = "SELECT TeamHomeID AS h, TeamAwayID AS a, ResultOfTeamHome AS r "
+				+ "FROM matches ";
+		Map<Integer, Integer> sp = new HashMap<Integer, Integer>();
+		Connection conn = DBConnect.getConnection();
+		
+		try {
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+			while (res.next()) {
+				int hId = res.getInt("h");
+				int aId = res.getInt("a");
+				int risultato = res.getInt("r");
+				
+				if(risultato == 1) {
+					if(sp.containsKey(hId)) 
+						sp.replace(hId, (sp.get(hId)+3));	
+					else
+						sp.put(hId, 3);
+					
+					if(!sp.containsKey(aId)) 
+						sp.put(aId, 0);
+				}
+				else if(risultato == 0) {
+					if(sp.containsKey(hId)) 
+						sp.replace(hId, (sp.get(hId)+1));	
+					else
+						sp.put(hId, 1);
+					
+					if(sp.containsKey(aId)) 
+						sp.replace(aId, (sp.get(aId)+1));	
+					else
+						sp.put(aId, 1);
+				}
+				else {
+					if(sp.containsKey(aId)) 
+						sp.replace(aId, (sp.get(aId)+3));	
+					else
+						sp.put(aId, 3);
+					
+					if(!sp.containsKey(hId)) 
+						sp.put(hId, 0);
+				}
+			}
+			conn.close();
+			
+			List<SquadraPunti> result = new ArrayList<>();
+			for(Integer id : sp.keySet()) {
+				result.add(new SquadraPunti(map.get(id), sp.get(id)));
+			}
+			
 			return result;
 			
 		} catch (SQLException e) {

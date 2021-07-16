@@ -22,7 +22,6 @@ import javafx.scene.control.TextField;
 public class FXMLController {
 	
 	private Model model;
-	private Simulator sim;
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -54,6 +53,10 @@ public class FXMLController {
     @FXML
     void doClassifica(ActionEvent event) {
     	this.txtResult.clear();
+    	if(this.model.getGrafo() == null) {
+    		this.txtResult.setText("Creare grafo!");
+    		return;
+    	}
     	Team t = this.cmbSquadra.getValue();
     	if(t == null) {
     		this.txtResult.setText("Scegliere una squadra!");
@@ -82,6 +85,35 @@ public class FXMLController {
 
     @FXML
     void doSimula(ActionEvent event) {
+    	this.txtResult.clear();
+    	if(this.model.getGrafo() == null) {
+    		this.txtResult.setText("Creare grafo!");
+    		return;
+    	}
+    	
+    	String nS = this.txtN.getText();
+    	String xS = this.txtX.getText();
+    	
+    	try {
+    		int n = Integer.parseInt(nS);
+    		if(n < 0) {
+    			this.txtResult.setText("N deve essere maggiore di 0!");
+        		return;
+    		}
+    		int x = Integer.parseInt(xS);
+    		if(x < 0) {
+    			this.txtResult.setText("X deve essere maggiore di 0!");
+        		return;
+    		}
+    		
+    		this.model.init(n, x);
+    		this.txtResult.appendText("Reporter medi per partita: " + this.model.getRepMedi());
+    		this.txtResult.appendText("\n\nPartite sotto la soglia X: " + this.model.getPartiteSottoX());
+    	}
+    	catch(NumberFormatException nfe) {
+    		this.txtResult.setText("N ed X devono essere interi!");
+    		return;
+    	}
     	
     }
 

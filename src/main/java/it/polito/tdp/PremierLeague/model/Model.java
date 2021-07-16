@@ -20,6 +20,8 @@ public class Model {
 	private Map<Integer, Team> idMap;
 	private List<SquadraPunti> classifica;
 	
+	private Simulator sim;
+	
 	public Model() {
 		this.dao = new PremierLeagueDAO();
 		this.idMap = new HashMap<Integer, Team>();
@@ -67,5 +69,29 @@ public class Model {
 		}
 		Collections.sort(p);
 		return p;
+	}
+	
+	public List<Match> listAllMatches() {
+		return this.dao.listAllMatches();
+	}
+
+	public Graph<Team, DefaultWeightedEdge> getGrafo() {
+		return grafo;
+	}
+	
+	public Map<Integer, Team> getIdMap() {
+		return idMap;
+	}
+
+	public void init(int n, int x) {
+		this.sim = new Simulator(n, x, this);
+	}
+	
+	public double getRepMedi() {
+		return this.sim.getRepMedi();
+	}
+	
+	public int getPartiteSottoX() {
+		return this.sim.getPartiteSottoX();
 	}
 }

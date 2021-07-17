@@ -10,7 +10,7 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 
 public class Simulator {
 	//coda degli eventi
-	private PriorityQueue<Event> queue;
+	//private PriorityQueue<Event> queue;
 	
 	//modello del mondo
 	private Map<Team, Integer> numReporter; //data una squadra dimmi quanti reporter la seguono
@@ -28,7 +28,7 @@ public class Simulator {
 	private Model model;
 	
 	//valori output
-	private double repMedi;
+	private int repMedi;
 	private int partiteSottoX;
 	
 	public Simulator(int n, int x, Model model) {
@@ -37,7 +37,7 @@ public class Simulator {
 		this.model = model;
 		this.grafo = model.getGrafo();
 		
-		this.repMedi = 0.0;
+		this.repMedi = 0;
 		this.partiteSottoX = 0;
 		
 		this.partite = model.listAllMatches();
@@ -45,7 +45,7 @@ public class Simulator {
 		
 		
 		//inizializzo coda eventi
-		this.queue = new PriorityQueue<Event>();
+		//this.queue = new PriorityQueue<Event>();
 		
 		//inizializzo il mondo
 		this.numReporter = new HashMap<Team, Integer>();

@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.PremierLeague.model.Model;
-import it.polito.tdp.PremierLeague.model.Simulator;
 import it.polito.tdp.PremierLeague.model.SquadraPunti;
 import it.polito.tdp.PremierLeague.model.Team;
 import javafx.event.ActionEvent;
